@@ -1,15 +1,25 @@
 from flask import Flask, request, render_template
+from baza import titles, pizzas
 
 app = Flask(__name__)
-
-@app.route("/")
+    
+@app.get("/")
 def home_page():
-    return render_template("index.html")
+    return render_template("index.html",
+                           menu="Меню",
+                           title="Oderman",
+                           number="Номер телефону: +1 234 567 890")
 
-@app.route("/menu/")
+@app.get("/menu/")
 def menu_page():
-    return render_template("menu.html")
+    context = {
+        "titles": titles,
+        "back_button": "Повернутися на головну сторінку",
+        "pizzas": pizzas
+    }
+    return render_template("menu.html", **context)
 
 
 if __name__ == "__main__":
   app.run(port=5050, debug=True, )
+ 
